@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import { useAuthStore } from "./store/authStore";
 import Dashboard from "./pages/Dashboard";
 import FullPageSpinner from "./components/FullPageSpinner";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -41,7 +43,7 @@ function App() {
     return <FullPageSpinner />;
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900  relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900  relative overflow-hidden">
       <FloatingShape
         size={"w-64 h-64"}
         color={"bg-green-500"}
@@ -89,6 +91,22 @@ function App() {
           }
         ></Route>
         <Route path="/verify-email" element={<EmailVerificationPage />}></Route>
+        <Route
+          path="/forgot-password"
+          element={
+            <RedirectAuthenticatedUser>
+              <ForgotPasswordPage />
+            </RedirectAuthenticatedUser>
+          }
+        ></Route>
+        <Route
+          path="/reset-password/:token"
+          element={
+            <RedirectAuthenticatedUser>
+              <ResetPasswordPage />
+            </RedirectAuthenticatedUser>
+          }
+        ></Route>
       </Routes>
       <Toaster />
     </div>

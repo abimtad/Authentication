@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Input from "../components/Input";
-import { Eye, EyeOff, Loader, Lock, Mail, User } from "lucide-react";
+import { Eye, EyeOff, Loader, Lock, Mail } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
@@ -27,7 +27,7 @@ const LogInPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-md w-full mt-14 mx-auto bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl 
+      className="max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl 
 			overflow-hidden"
     >
       <div className="p-8">
@@ -39,11 +39,13 @@ const LogInPage = () => {
           <Input
             icon={Mail}
             type="email"
+            required
             placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
+            required
             icon={Lock}
             type="password"
             placeholder="Password"
@@ -65,10 +67,10 @@ const LogInPage = () => {
             >
               Forgot password ?
             </Link>
-            {error && (
-              <p className="text-red-500 text-sm mb-3 font-semibold">{error}</p>
-            )}
           </div>
+          {error && (
+            <p className="text-red-500 text-sm mb-3 font-semibold">{error}</p>
+          )}
 
           <motion.button
             className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white 

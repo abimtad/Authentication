@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Input from "../components/Input";
-import { Loader, Lock, Mail, User } from "lucide-react";
+import { Eye, EyeOff, Loader, Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
@@ -12,6 +12,8 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const { signUp, isLoading, error } = useAuthStore();
+  const [hasValue, setHasValue] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ const SignUpPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-md w-full mt-14 mx-auto bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl 
+      className="max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl 
 			overflow-hidden"
     >
       <div className="p-8">
@@ -47,6 +49,7 @@ const SignUpPage = () => {
           <Input
             icon={Mail}
             type="email"
+            required
             placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -54,9 +57,18 @@ const SignUpPage = () => {
           <Input
             icon={Lock}
             type="password"
+            required
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            See={Eye}
+            Blind={EyeOff}
+            hasValue={hasValue}
+            onFocus={() => setIsFocused(true)}
+            isFocused={isFocused}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setHasValue(e.target.value.length > 0);
+            }}
           />
           {error && (
             <p className="text-sm text-red-400 font-semibold mt-4">{error}</p>
